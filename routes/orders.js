@@ -10,7 +10,7 @@ import {
 
 export const ordersRouter = express.Router();
 
-const validateOrder = () => [
+const orderValidator = () => [
   body("date").notEmpty().isISO8601(),
   body("user_id").notEmpty().isNumeric(),
   body("price").custom(value => {
@@ -23,6 +23,6 @@ const validateOrder = () => [
 
 ordersRouter.get("/", getAllOrders);
 ordersRouter.get("/:id", getOneOrder);
-ordersRouter.post("/", validateOrder(), createNewOrder);
-ordersRouter.put("/:id", validateOrder(), editOneOrder);
+ordersRouter.post("/", orderValidator(), createNewOrder);
+ordersRouter.put("/:id", orderValidator(), editOneOrder);
 ordersRouter.delete("/:id", deleteOneOrder);

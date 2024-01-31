@@ -5,11 +5,11 @@ export const getAllOrders = async (req, res) => {
   try{
     const { rows: orders } = await pool.query(
       `SELECT *
-       FROM orders
+       FROM orders;
       `
     );
     if (orders.length === 0) {
-      res.sendStatus(400);
+      res.sendStatus(404);
     } else {
       res.status(200).send(orders)
     };
@@ -24,10 +24,10 @@ export const getOneOrder = async (req, res) => {
     const { rows: order } = await pool.query(`
       SELECT *
       FROM orders
-      WHERE id = $1  
+      WHERE id = $1;  
     `, [id]);
     if (order.length === 0) {
-      res.sendStatus(400);
+      res.sendStatus(404);
     } else {
       res.status(200).send(order[0]);
     }
@@ -49,12 +49,12 @@ export const createNewOrder = async (req, res) => {
     INSERT INTO orders
     (price, date, user_id)
     VALUES($1, $2, $3)
-    RETURNING *
+    RETURNING *;
     `, [price, date, user_id]);
     if( order.length === 0) {
-      res.sendStatus(400);
+      res.sendStatus(404);
     } else {
-      res.status(200).send(order[0]);
+      res.status(201).send(order[0]);
     }
   } catch(error) {
     res.sendStatus(500);
@@ -78,10 +78,10 @@ export const editOneOrder = async (req, res) => {
         date = $2,
         user_id = $3
       WHERE id = $4
-      RETURNING *
+      RETURNING *;
     `, [price, date, user_id, id]);
     if(order.length === 0) {
-      res.sendStatus(400);
+      res.sendStatus(404);
     } else {
       res.status(201).send(order[0]);
     };
@@ -96,7 +96,7 @@ export const deleteOneOrder = async (req, res) => {
     const { rows: order } = await pool.query(`
     DELETE FROM orders
     WHERE user_id = $1
-    RETURNING *
+    RETURNING *;
     `, [user_id]);
     if(order.length === 0) {
       res.sendStatus(400);

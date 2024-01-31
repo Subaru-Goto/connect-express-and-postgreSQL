@@ -5,7 +5,8 @@ import {
   createNewUser,
   editOneUser,
   deleteOneUser,
-  getUserOrder
+  getUserOrder,
+  checkActiveUser
 } from "../controllers/usersController.js";
 import { userValidator } from "../validators/userValidator.js";
 
@@ -16,4 +17,5 @@ usersRouter.get("/:id", getOneUser);
 usersRouter.get("/:id/orders", getUserOrder);
 usersRouter.post("/", userValidator, createNewUser);
 usersRouter.put("/:id", userValidator, editOneUser);
+usersRouter.put("/:id/check-inactive", checkActiveUser);
 usersRouter.delete("/:id", deleteOneUser);
